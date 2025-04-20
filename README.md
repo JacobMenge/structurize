@@ -1,142 +1,114 @@
 # Structurize
 
-**Structurize** is a versatile Bash utility that exports a full, machine‑readable snapshot of any programming project. It can output directory structures, file contents, and optional metadata in **JSON**, **NDJSON**, **Markdown**, or **plain text**, making it ideal for:
-
-- **AI pipelines** and token‑efficient project ingestion
-- **Documentation**, READMEs, or code review supplements
-- **Automated audits**, static analysis, and tooling integration
+**Structurize** is a clean, interactive Bash tool for project structure analysis. It exports the layout of your codebase in formats like **JSON**, **NDJSON**, **Markdown**, or **Text**, making it ideal for AI preprocessing, documentation, DevOps audits, and code reviews.
 
 ---
 
-## 🚀 Features
+## 🌊 Features
 
-- **Multi‑format export**
-  - **JSON**: compact array of objects
-  - **NDJSON**: one JSON object per line, perfect for streaming
-  - **Markdown**: human‑readable sections with code fences
-  - **Plain text**: simple indented listing
-
-- **Real‑time progress bar** for large codebases
-- **Flexible filtering**
-  - Exclude arbitrary glob patterns (e.g. `node_modules`, `.git`)
-  - Restrict to specific subdirectories (e.g. `src`, `lib`)
-  - Limit to chosen file extensions (e.g. `js`, `py`)
-
-- **Optional metadata**: file size & modification timestamp
-- **Self‑healing**:
-  - Strips Windows CRLF line endings and UTF‑8 BOM on launch
-  - Works unmodified on native Linux and WSL environments
-
-- **Zero dependencies** beyond standard Unix utilities (`bash`, `find`, `sed`, `stat`, etc.)
-- **Clean, modular code** with clear English comments
+- ✨ Export in **four formats**: `json`, `ndjson`, `markdown`, `text`
+- ⏳ **Live progress bar** (clean, readable display)
+- ⚡ **Lightweight** – only requires `bash`, `find`, `sed`, `stat`
+- 🤖 **AI-ready**: NDJSON and Markdown are token-efficient
+- ⚙️ **Advanced filtering**: file types, subdirectories, exclusions
+- 📅 Optional: **Metadata export** (file size, timestamps)
+- 🪄 Optional `--debug` mode for transparent file tracking
 
 ---
 
-## 📦 Installation
+## 🚀 Quickstart
 
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/JacobMenge/structurize.git
-   cd structurize
-   ```
+### 1. Installation (local or global)
 
-2. **Make the script executable**
-   ```bash
-   chmod +x structurize.sh
-   ```
-
-3. *(Optional)* **Install globally**
-   ```bash
-   sudo mv structurize.sh /usr/local/bin/structurize
-   ```
-
----
-
-## 🛠️ Usage
-
-Run the script from any project directory:
-
+#### Local usage:
 ```bash
-./structurize.sh [OPTIONS]
+chmod +x structurize.sh
+./structurize.sh --help
 ```
 
-If installed globally:
-
+#### Global CLI usage:
 ```bash
-structurize [OPTIONS]
+sudo mv structurize.sh /usr/local/bin/structurize
+structurize --help
 ```
 
-By default, it scans the current directory and writes a JSON array to `project_structure.json`.
+Now you can call the tool from anywhere via `structurize`.
 
 ---
 
-## ⚙️ Command‑Line Options
+## 🔧 CLI Options
 
-| Short | Long         | Description                                                              | Default                        |
-|:-----:|--------------|--------------------------------------------------------------------------|--------------------------------|
-| `-d`  | `--directory`| Base directory to scan                                                   | `.`                            |
-| `-o`  | `--output`   | Output file path                                                         | `project_structure.json`       |
-| `-f`  | `--format`   | `text` \| `markdown` \| `json` \| `ndjson`                               | `json`                         |
-| `-n`  | `--ndjson`   | Shortcut for `-f ndjson`                                                 | —                              |
-| `-m`  | `--meta`     | Include file size and modification time                                  | Off                            |
-| `-e`  | `--exclude`  | Comma‑separated glob patterns (relative) to exclude                      | —                              |
-| `-s`  | `--select`   | Comma‑separated subdirectories to include exclusively                    | —                              |
-| `-t`  | `--types`    | Comma‑separated file extensions (without `.`)                            | —                              |
-| `-h`  | `--help`     | Display this help message                                                | —                              |
-
----
-
-## 📚 Examples
-
-1. **Default JSON export**  
-   ```bash
-   ./structurize.sh
-   ```
-
-2. **NDJSON, excluding `node_modules` & `.git`**  
-   ```bash
-   ./structurize.sh -n \
-     -e node_modules,.git \
-     -o project.ndjson
-   ```
-
-3. **Markdown with metadata**  
-   ```bash
-   ./structurize.sh \
-     -f markdown \
-     -m \
-     -o structure.md
-   ```
-
-4. **Plain text, only `src` and `lib`, limit to `.js` files**  
-   ```bash
-   ./structurize.sh \
-     -f text \
-     -s src,lib \
-     -t js \
-     -o src-index.txt
-   ```
+| Short | Long             | Description                                                |
+|--------|------------------|------------------------------------------------------------|
+| `-d`   | `--directory`    | Base directory (default: current directory)               |
+| `-o`   | `--output`       | Output file path (default: `project_structure.json`)      |
+| `-f`   | `--format`       | Output format: `text`, `markdown`, `json`, `ndjson`       |
+| `-n`   | `--ndjson`       | Shortcut for `-f ndjson`                                  |
+| `-m`   | `--meta`         | Include file size and modification timestamp              |
+| `-e`   | `--exclude`      | Comma-separated paths or glob patterns to exclude         |
+| `-s`   | `--select`       | Comma-separated subdirectories to include                 |
+| `-t`   | `--types`        | Comma-separated file extensions (e.g. `js,ts,json`)       |
+|        | `--debug`        | Show current file inline during export                    |
+| `-h`   | `--help`         | Display help message                                      |
 
 ---
 
-## 🤝 Contributing
+## 👀 Examples
 
-Contributions are welcome! To contribute:
+### Export a React frontend
+```bash
+structurize -n --debug -m \
+  -e node_modules,.git,public \
+  -t js,jsx,ts,tsx,json \
+  -s src \
+  -o frontend.ndjson
+```
 
-1. Fork the repository
-2. Create a new branch: `git checkout -b feature/my-feature`
-3. Make changes, follow existing code style
-4. Commit and push your branch
-5. Open a Pull Request
+### Export a Node.js backend
+```bash
+structurize -n --debug -m \
+  -e node_modules,.git,tests \
+  -t js,json \
+  -s src \
+  -o backend.ndjson
+```
 
-Please include tests, examples, or updated documentation where applicable.
+### Export fullstack project (Docker + Backend + Frontend)
+```bash
+structurize -n --debug -m \
+  -e node_modules,.git,tests \
+  -t js,ts,json,yml,yaml,conf,dockerignore,env \
+  -o project.ndjson
+```
+
+Optional: Markdown format for documentation:
+```bash
+structurize -f markdown -m -o structure.md
+```
 
 ---
 
-## 📄 License
+## 🚚 Use Cases
 
-This project is licensed under the **MIT License**. See [LICENSE](LICENSE) for full text.
+- 🤖 Preprocessing for AI (ChatGPT, LLMs, Copilots)
+- 📄 Auto-documentation of codebases
+- 📊 DevOps audits & compliance exports
+- 📚 Developer onboarding & code reviews
 
 ---
 
-> **Structurize**: export your project’s structure and content quickly, clearly, and in AI‑friendly formats.
+## 💼 License
+
+MIT License. Free to use and modify.
+
+---
+
+## ✨ Pro Tip
+
+Run with `--debug` first to see what gets included:
+```bash
+structurize -n --debug -o check.ndjson
+```
+
+If nothing is exported: double-check your filters (`-t`, `-s`, `-e`) or remove them for testing.
+
