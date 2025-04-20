@@ -36,7 +36,7 @@
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/<YOUR_USER>/structurize.git
+   git clone https://github.com/JacobMenge/structurize.git
    cd structurize
    ```
 
