@@ -1,0 +1,2 @@
+# structurize
+ **Structurize** is a versatile, professional‑grade Bash utility that exports a full, machine‑readable snapshot of any programming project. It can output directory structures, file contents, and optional metadata in **JSON**, **NDJSON**, **Markdown**, or **plain text**, making it ideal for:  - **AI pipelines** and token‑efficient project ingestion - **Documentation**, READMEs, or code review supplements - **Automated audits**, static analysis, and tooling integration
