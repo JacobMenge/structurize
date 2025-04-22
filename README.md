@@ -1,6 +1,6 @@
 # Structurize
 
-**Structurize** is a clean, interactive Bash tool for project structure analysis. It exports the layout of your codebase in formats like **JSON**, **NDJSON**, **Markdown**, or **Text**, making it ideal for AI preprocessing, documentation, DevOps audits, and code reviews.
+**Structurize** is a interactive Bash tool for project structure analysis. It exports the layout of your codebase in formats like **JSON**, **NDJSON**, **Markdown**, or **Text**, making it ideal for AI preprocessing, documentation, DevOps audits, and code reviews.
 
 ---
 
